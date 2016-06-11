@@ -5,17 +5,17 @@ GAME
 - Deck 
     [Card]
 - Scores
-  - id (int), score (int)
+  - [score]
 - Current round number (int)
 - Maximum round number (int)
 - Hands
-  - id (int), [Card]
+  - [[Card]]
 - Tricks
-  - id (int), number of tricks won (int)
+  - [numTricks]
 - Judgements
-  - id (int), value (int)
+  - [values]
 - Table
-  - [(playerId, Card)]
+  - [Card]
 - Trump (Suit)
 - Chaal (Suit)
 - First player ID (int)
