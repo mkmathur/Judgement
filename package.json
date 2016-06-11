@@ -1,0 +1,17 @@
+{
+  "name": "judgement",
+  "version": "1.0.0",
+  "description": "A card game.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mallika Mathur",
+  "license": "ISC",
+  "dependencies": {
+    "immutable": "^3.8.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+  }
+}
