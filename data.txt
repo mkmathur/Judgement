@@ -1,0 +1,27 @@
+GAME
+
+- Players
+  - id (int), name (String)
+- Deck 
+    [Card]
+- Scores
+  - id (int), score (int)
+- Current round number (int)
+- Maximum round number (int)
+- Hands
+  - id (int), [Card]
+- Tricks
+  - id (int), number of tricks won (int)
+- Judgements
+  - id (int), value (int)
+- Table
+  - [(playerId, Card)]
+- Trump (Suit)
+- Chaal (Suit)
+- First player ID (int)
+- State
+  Waiting for players
+  Waiting for judgements
+  Waiting for player X to put down card
+  Game over
+

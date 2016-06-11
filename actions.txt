@@ -1,0 +1,45 @@
+ACTIONS FROM CLIENT
+
+- Make the game
+- Add a player
+- Start the game
+- Judgement is made
+- Player puts down a card
+
+ACTIONS ON SERVER
+
+New player =>
+  Set up player, score
+
+Start game =>
+  Initialize, shuffle the deck
+  Initialize the round number and max round number
+
+Start round =>
+  Update round number
+  Reset tricks
+  Shuffle deck
+  Update trump
+  Deal hands
+  Change state to waiting for judgements
+
+On judgement received =>
+  update judgement list
+  if all judgements received, change state to waiting for player to put down card
+  
+Player puts down card =>
+  verify card is legal
+  add card to table
+  remove from player's hand
+  if first player,
+    update chaal
+  if last player,
+    calculate winner of trick
+    add to tricks
+    if hand is empty,
+      update scores
+      if game is not over,
+        Start round
+      else,
+        change state to game over
+  
