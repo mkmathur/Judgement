@@ -1,11 +1,12 @@
 import * as Cards from './Cards.js';
 import * as Game from './game.js';
 import * as Model from './model.js';
+import * as _ from './controller_helpers.js';
 
 const DUMMY_GAME = 123;
 
 export function makeGame(data) {
-  // TODO
+  // TODO: maybe move this to REST API?
 }
 
 export function addPlayer(data) {
@@ -15,44 +16,26 @@ export function addPlayer(data) {
 
 export function startGame(data) {
   const model = new Model(DUMMY_GAME);
-
-  const deck = Cards.initializeDeck();
-  Cards.shuffle(deck);
-  model.deck = deck;
-
+  _.initializeDeck(model);
   model.roundNumber = 0;
   model.maxRoundNumber = Game.maxRoundNumber(model.numPlayers);
-
   startRound(data);
 }
 
 export function startRound(data) {
   const model = new Model(DUMMY_GAME);
 
-  const nextRoundNumber = Game.nextRoundNumber(model.roundNumber);
-
+  const nextRoundNumber = Game.nextRoundNumber(model.roundNumber, model.maxRoundNumber);
   if (nextRoundNumber == 0) {
     endGame();
     return;
   }
 
+  _.shuffleDeck(model);
   model.roundNumber = nextRoundNumber;
   model.resetTricks();
-
-  const deck = model.deck;
-  Cards.shuffle(deck);
-  model.deck = deck;
-
   model.trump = Game.nextTrump(model.trump);
-
-  const players = model.players;
-  for (player of players) {
-    const hand = [];
-    Cards.deal(deck, hand, nextRoundNumber);
-    model.updatePlayerHand(playerID, hand);
-  }
-  model.deck = deck;
-
+  _.deal(model);
   model.state = Game.STATES.WAITING_FOR_JUDGEMENTS;
 }
 

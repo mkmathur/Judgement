@@ -10,3 +10,11 @@ export const STATES = {
 export function maxRoundNumber(numPlayers) {
   return floor(DECK_SIZE / numPlayers);
 }
+
+export function nextRoundNumber(num, max) {
+
+}
+
+export function nextTrump(suit) {
+
+}
