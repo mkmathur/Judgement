@@ -9,12 +9,12 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  socket.on('makeGame', Controller.onMakeGame);
-  socket.on('addPlayer', Controller.onAddPlayer);
-  socket.on('startGame', Controller.onStartGame);
-  socket.on('startRound', Controller.onStartRound);
-  socket.on('makeJudgement', Controller.onMakeJudgement);
-  socket.on('playCard', Controller.onPlayCard);
+  socket.on('makeGame', Controller.makeGame);
+  socket.on('addPlayer', Controller.addPlayer);
+  socket.on('startGame', Controller.startGame);
+  socket.on('startRound', Controller.startRound);
+  socket.on('makeJudgement', Controller.makeJudgement);
+  socket.on('playCard', Controller.playCard);
 });
 
 http.listen(3000, () => {
