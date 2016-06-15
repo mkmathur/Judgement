@@ -2,7 +2,7 @@
   "name": "judgement",
   "version": "1.0.0",
   "description": "A card game.",
-  "main": "index.js",
+  "main": "dist/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d dist"
@@ -10,7 +10,9 @@
   "author": "Mallika Mathur",
   "license": "ISC",
   "dependencies": {
-    "immutable": "^3.8.1"
+    "express": "^4.13.4",
+    "immutable": "^3.8.1",
+    "socket.io": "^1.4.6"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
