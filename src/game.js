@@ -22,8 +22,3 @@ function onCardPlayed(data) {
 
 }
 
-firebaseRef.on('child_added', onPlayerAdded);
-firebaseRef.on('game_started', onGameStarted);
-firebaseRef.on('round_started', onRoundStarted);
-firebaseRef.on('judgement_received', onJudgementReceived);
-firebaseRef.on('card_played', onCardPlayed);
