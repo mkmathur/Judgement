@@ -1,24 +1,32 @@
-function onPlayerAdded(data) {
-  // add score of 0
+import * as Cards from './Cards.js';
+import * as Game from './game.js';
+import * as Model from './model.js';
+
+export function onMakeGame(data) {
+ Model.makeGame(123);
 }
 
-function onGameStarted(data) {
+export function onAddPlayer(data) {
+  Model.addPlayer(123, data.playerName);
+}
+
+export function onStartGame(data) {
   deck = initializeDeck();
   shuffle(deck);
   roundNumber = 0;
-  maxRoundNumber = floor(52 / numPlayers);
+  maxRoundNumber = floor(deck.length / numPlayers);
 }
 
-function onRoundStarted(data) {
+export function onStartRound(data) {
   roundNumber = updateRoundNumber(roundNumber);
-  
-}
-
-function onJudgementReceived(data) {
 
 }
 
-function onCardPlayed(data) {
+export function onMakeJudgement(data) {
+
+}
+
+export function onPlayCard(data) {
 
 }
 

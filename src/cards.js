@@ -2,7 +2,7 @@ var Immutable = require('immutable');
 
 const SUITS = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
 
-const Suits = {
+export const Suits = {
   CLUBS: 0,
   DIAMONDS: 1,
   HEARTS: 2,
@@ -22,11 +22,18 @@ for (let i = 2; i < 11; i++) {
 
 Object.freeze(VALUES);
 
-class Card extends Immutable.Record({ suit: 0, value: 1 }) {
+export class Card extends Immutable.Record({ suit: 0, value: 1 }) {
   toString() {
     return `${VALUES[this.value]} of ${SUITS[this.suit]}`;
   }
 }
 
-exports.Suits = Suits;
-exports.Card = Card;
+// Returns a deck containing all 52 cards.
+export function initializeDeck() {
+
+}
+
+// Returns the shuffled deck.
+export function shuffle(deck) {
+
+}
