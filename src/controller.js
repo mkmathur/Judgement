@@ -2,27 +2,35 @@ import * as Cards from './Cards.js';
 import * as Game from './game.js';
 import * as Model from './model.js';
 
+const DUMMY_GAME = 123;
+
 export function makeGame(data) {
- Model.makeGame(123);
+  // TODO
 }
 
 export function addPlayer(data) {
-  Model.addPlayer(123, data.playerName);
+  const model = new Model(DUMMY_GAME);
+  model.addPlayer(data.playerName);
 }
 
 export function startGame(data) {
-  const gameID = data.gameID;
+  const model = new Model(DUMMY_GAME);
+
   const deck = Cards.initializeDeck();
   Cards.shuffle(deck);
-  Model.setRoundNumber(0);
-  const numPlayers = Model.getNumPlayers(gameID);
-  Model.setMaxRoundNumber(Game.maxRoundNumber(numPlayers));
-  Model.setDeck(deck);
-  onStartRound(data);
+  model.setDeck(deck);
+
+  model.setRoundNumber(0);
+  const numPlayers = model.getNumPlayers();
+  model.setMaxRoundNumber(Game.maxRoundNumber(numPlayers));
+
+  startRound(data);
 }
 
 export function startRound(data) {
-  const currentRoundNumber = Model.getRoundNumber(data.gameID);
+  const model = new Model(DUMMY_GAME);
+
+  const currentRoundNumber = model.getRoundNumber(data.gameID);
   const nextRoundNumber = Game.getNextRoundNumber(currentRoundNumber);
 
   if (nextRoundNumber == 0) {
@@ -30,38 +38,40 @@ export function startRound(data) {
     return;
   }
 
-  Model.setRoundNumber(data.gameID, nextRoundNumber);
+  model.setRoundNumber(nextRoundNumber);
+  model.resetTricks();
 
-  Model.resetTricks(data.gameID);
-
-  const deck = Model.getDeck();
+  const deck = model.getDeck();
   Cards.shuffle(deck);
-  Model.setDeck(deck);
+  model.setDeck(deck);
 
-  const currentTrump = Model.getCurrentTrump();
+  const currentTrump = model.getCurrentTrump();
   const nextTrump = Game.getNextTrump(currentTrump);
-  Model.setTrump(nextTrump);
+  model.setTrump(nextTrump);
 
-  const players = Model.getPlayers();
-  const deck = Model.getDeck();
+  const players = model.getPlayers();
+  const deck = model.getDeck();
   for (player of players) {
     const hand = [];
     Cards.deal(deck, hand, nextRoundNumber);
-    Model.setHand(playerID, hand);
+    model.setHand(playerID, hand);
   }
-  Model.setDeck(deck);
+  model.setDeck(deck);
 
-  Model.setState(Game.STATES.WAITING_FOR_JUDGEMENTS);
+  model.setState(Game.STATES.WAITING_FOR_JUDGEMENTS);
 }
 
 export function makeJudgement(data) {
+  const model = new Model(DUMMY_GAME);
 
 }
 
 export function playCard(data) {
+  const model = new Model(DUMMY_GAME);
 
 }
 
 function endGame() {
+  const model = new Model(DUMMY_GAME);
 
 }
