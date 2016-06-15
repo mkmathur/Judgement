@@ -18,11 +18,10 @@ export function startGame(data) {
 
   const deck = Cards.initializeDeck();
   Cards.shuffle(deck);
-  model.setDeck(deck);
+  model.deck = deck;
 
-  model.setRoundNumber(0);
-  const numPlayers = model.getNumPlayers();
-  model.setMaxRoundNumber(Game.maxRoundNumber(numPlayers));
+  model.roundNumber = 0;
+  model.maxRoundNumber = Game.maxRoundNumber(model.numPlayers);
 
   startRound(data);
 }
@@ -30,35 +29,31 @@ export function startGame(data) {
 export function startRound(data) {
   const model = new Model(DUMMY_GAME);
 
-  const currentRoundNumber = model.getRoundNumber(data.gameID);
-  const nextRoundNumber = Game.getNextRoundNumber(currentRoundNumber);
+  const nextRoundNumber = Game.nextRoundNumber(model.roundNumber);
 
   if (nextRoundNumber == 0) {
     endGame();
     return;
   }
 
-  model.setRoundNumber(nextRoundNumber);
+  model.roundNumber = nextRoundNumber;
   model.resetTricks();
 
-  const deck = model.getDeck();
+  const deck = model.deck;
   Cards.shuffle(deck);
-  model.setDeck(deck);
+  model.deck = deck;
 
-  const currentTrump = model.getCurrentTrump();
-  const nextTrump = Game.getNextTrump(currentTrump);
-  model.setTrump(nextTrump);
+  model.trump = Game.nextTrump(model.trump);
 
-  const players = model.getPlayers();
-  const deck = model.getDeck();
+  const players = model.players;
   for (player of players) {
     const hand = [];
     Cards.deal(deck, hand, nextRoundNumber);
-    model.setHand(playerID, hand);
+    model.updatePlayerHand(playerID, hand);
   }
-  model.setDeck(deck);
+  model.deck = deck;
 
-  model.setState(Game.STATES.WAITING_FOR_JUDGEMENTS);
+  model.state = Game.STATES.WAITING_FOR_JUDGEMENTS;
 }
 
 export function makeJudgement(data) {
