@@ -3,7 +3,7 @@ export class Model {
     // Init firebase
   }
 
-  addPlayer() {
+  addPlayer(name) {
 
   }
 
@@ -11,7 +11,11 @@ export class Model {
 
   }
 
-  updatePlayerHand() {
+  updatePlayerHand(playerID, hand) {
+
+  }
+
+  getPlayerHand(playerID) {
 
   }
 

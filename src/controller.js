@@ -1,7 +1,6 @@
 import * as Cards from './Cards.js';
 import * as Game from './game.js';
 import * as Model from './model.js';
-import * as _ from './controller_helpers.js';
 
 const DUMMY_GAME = 123;
 
@@ -16,7 +15,7 @@ export function addPlayer(data) {
 
 export function startGame(data) {
   const model = new Model(DUMMY_GAME);
-  _.initializeDeck(model);
+  initializeDeck(model);
   model.roundNumber = 0;
   model.maxRoundNumber = Game.maxRoundNumber(model.numPlayers);
   startRound(data);
@@ -31,25 +30,59 @@ export function startRound(data) {
     return;
   }
 
-  _.shuffleDeck(model);
+  shuffleDeck(model);
   model.roundNumber = nextRoundNumber;
   model.resetTricks();
   model.trump = Game.nextTrump(model.trump);
-  _.deal(model);
+  deal(model);
+  model.firstPlayer = Game.nextPlayer(model.firstPlayer);
   model.state = Game.STATES.WAITING_FOR_JUDGEMENTS;
 }
 
 export function makeJudgement(data) {
   const model = new Model(DUMMY_GAME);
+  if (!model.hasJudgement(data.playerID)) {
+    model.setJudgement(data.playerID, data.judgement);
+  }
 
+  if (model.players.every(player => model.hasJudgement(player))) {
+    model.state = Game.STATES.WAITING_FOR_CARD;
+  }
 }
 
 export function playCard(data) {
   const model = new Model(DUMMY_GAME);
-
+  if (data.playerID == model.firstPlayer) {
+    model.chaal = data.card.suit;
+  }
+  else {
+    if (!Game.validateCard(data.card, model.getPlayerHand(data.playerID), model.table, model.chaal)) return;
+  }
 }
 
 function endGame() {
   const model = new Model(DUMMY_GAME);
 
+}
+
+function initializeDeck(model) {
+  const deck = Cards.initializeDeck();
+  Cards.shuffle(deck);
+  model.deck = deck;
+}
+
+function shuffleDeck(model) {
+  const deck = model.deck;
+  Cards.shuffle(deck);
+  model.deck = deck;
+}
+
+function deal(model) {
+  const players = model.players;
+  for (player of players) {
+    const hand = [];
+    Cards.deal(deck, hand, nextRoundNumber);
+    model.updatePlayerHand(playerID, hand);
+  }
+  model.deck = deck;
 }

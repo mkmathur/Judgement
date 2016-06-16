@@ -14,25 +14,25 @@ startRound (game ID) =>
   Shuffle deck
   Update trump
   Deal hands
+  Determine first player
   Change state to waiting for judgements
 
 judge (game ID, player ID, judgement) =>
   update judgement list
-  if all judgements received, change state to waiting for player to put down card
-  
+  if all judgements received,
+    change state to waiting for player to put down card
+
 playCard (game ID, player ID, card) =>
-  verify card is legal
-  add card to table
-  remove from player's hand
   if first player,
     update chaal
+  else,
+    verify card is legal
+  add card to table
+  remove from player's hand
   if last player,
     calculate winner of trick
     add to tricks
     if hand is empty,
       update scores
-      if game is not over,
-        Start round
-      else,
-        change state to game over
-  
+      start round
+
