@@ -3,7 +3,7 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const firebase = require("firebase");
 
-import * as Controller from './controller.js';
+import * as Actions from './actions.js';
 
 firebase.initializeApp({
   serviceAccount: "firebaseCredentials.json",
@@ -18,20 +18,19 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
   socket.on('addPlayer', (msg) => {
-    console.log('add player');
-    Controller.addPlayer(db, msg.gameID, msg.name);
+    Actions.addPlayer(db, msg.gameID, msg.name);
   });
 
   socket.on('startGame', (msg) => {
-    Controller.startGame(db, msg.gameID);
+    Actions.startGame(db, msg.gameID);
   });
 
   socket.on('makeJudgement', (msg) => {
-    Controller.makeJudgement(db, msg.gameID, msg.playerID, msg.judgement);
+    Actions.makeJudgement(db, msg.gameID, msg.playerID, msg.judgement);
   });
 
   socket.on('playCard', (msg) => {
-    Controller.playCard(db, msg.gameID, msg.playerID, msg.card);
+    Actions.playCard(db, msg.gameID, msg.playerID, msg.card);
   });
 
 });
