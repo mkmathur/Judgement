@@ -7,20 +7,13 @@ export class Model {
 
   }
 
-  resetTricks() {
-
-  }
-
-  updatePlayerHand(playerID, hand) {
-
-  }
-
-  getPlayerHand(playerID) {
-
-  }
-
+  // get list of player IDs
   get players() {
 
+  }
+
+  getPlayer(playerID) {
+    return new PlayerModel(gameID, playerID);
   }
 
   get numPlayers() {
@@ -60,6 +53,77 @@ export class Model {
   }
 
   get state() {
+
+  }
+
+  set table(cards) {
+
+  }
+
+  get table() {
+
+  }
+
+  set chaal(suit) {
+
+  }
+
+  get chaal() {
+
+  }
+
+  set firstPlayer(playerID) {
+
+  }
+
+  get firstPlayer() {
+
+  }
+
+  set numJudgements(num) {
+
+  }
+
+  get numJudgements() {
+
+  }
+
+}
+
+class PlayerModel {
+  constructor(gameID, playerID) {
+    // Init firebase ref
+  }
+
+  set hand(cards) {
+
+  }
+
+  get hand() {
+
+  }
+
+  set score(num) {
+
+  }
+
+  get score() {
+
+  }
+
+  set tricks(num) {
+
+  }
+
+  get tricks() {
+
+  }
+
+  set judgement(num) {
+
+  }
+
+  get judgement() {
 
   }
 

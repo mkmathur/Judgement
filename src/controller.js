@@ -32,31 +32,35 @@ export function startRound(data) {
 
   shuffleDeck(model);
   model.roundNumber = nextRoundNumber;
-  model.resetTricks();
+  resetTricks();
   model.trump = Game.nextTrump(model.trump);
   deal(model);
   model.firstPlayer = Game.nextPlayer(model.firstPlayer);
+  model.numJudgements = 0;
   model.state = Game.STATES.WAITING_FOR_JUDGEMENTS;
 }
 
 export function makeJudgement(data) {
   const model = new Model(DUMMY_GAME);
-  if (!model.hasJudgement(data.playerID)) {
-    model.setJudgement(data.playerID, data.judgement);
+  const playerModel = model.getPlayer(data.playerID);
+  if (playerModel.judgement != null) {
+    playerModel.judgement = data.judgement;
+    model.numJudgements = model.numJudgements + 1
   }
 
-  if (model.players.every(player => model.hasJudgement(player))) {
+  if (model.numJudgements == model.numPlayers) {
     model.state = Game.STATES.WAITING_FOR_CARD;
   }
 }
 
 export function playCard(data) {
   const model = new Model(DUMMY_GAME);
+  const playerModel = model.getPlayer(data.playerID);
   if (data.playerID == model.firstPlayer) {
     model.chaal = data.card.suit;
   }
   else {
-    if (!Game.validateCard(data.card, model.getPlayerHand(data.playerID), model.table, model.chaal)) return;
+    if (!Game.validateCard(data.card, playerModel.hand, model.table, model.chaal)) return;
   }
 }
 
@@ -82,7 +86,15 @@ function deal(model) {
   for (player of players) {
     const hand = [];
     Cards.deal(deck, hand, nextRoundNumber);
-    model.updatePlayerHand(playerID, hand);
+    const playerModel = model.getPlayer(player);
+    playerModel.hand = hand;
   }
   model.deck = deck;
+}
+
+function resetTricks(model) {
+  for (player of model.players) {
+    const playerModel = model.getPlayer(player);
+    playerModel.tricks = 0;
+  }
 }

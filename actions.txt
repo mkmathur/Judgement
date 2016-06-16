@@ -16,9 +16,11 @@ startRound (game ID) =>
   Deal hands
   Determine first player
   Change state to waiting for judgements
+  Reset num judgements
 
 judge (game ID, player ID, judgement) =>
   update judgement list
+  increment num judgements
   if all judgements received,
     change state to waiting for player to put down card
 
