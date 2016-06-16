@@ -18,3 +18,7 @@ export function nextRoundNumber(num, max) {
 export function nextTrump(suit) {
 
 }
+
+export function determineTrickWinner(table, chaal, trump) {
+
+}

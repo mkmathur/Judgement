@@ -46,10 +46,9 @@ export function makeJudgement(data) {
   if (playerModel.judgement != null) {
     playerModel.judgement = data.judgement;
     model.numJudgements = model.numJudgements + 1
-  }
-
-  if (model.numJudgements == model.numPlayers) {
-    model.state = Game.STATES.WAITING_FOR_CARD;
+    if (model.numJudgements == model.numPlayers) {
+      model.state = Game.STATES.WAITING_FOR_CARD;
+    }
   }
 }
 
@@ -62,6 +61,21 @@ export function playCard(data) {
   else {
     if (!Game.validateCard(data.card, playerModel.hand, model.table, model.chaal)) return;
   }
+  addCardToTable(model, data.card);
+  removeFromHand(playerModel, data.card);
+  if (model.table.length == model.numPlayers) {
+    endRound(model);
+  }
+}
+
+function endRound(model) {
+    const winner = Game.determineTrickWinner(model.table, model.chaal, model.trump);
+    const winnerModel = model.getPlayer(winner);
+    winnerModel.tricks = winnerModel.tricks + 1;
+    if (winnerModel.hand.length == 0) {
+      updateScores(model);
+      startRound(data);
+    }
 }
 
 function endGame() {
@@ -97,4 +111,17 @@ function resetTricks(model) {
     const playerModel = model.getPlayer(player);
     playerModel.tricks = 0;
   }
+}
+
+function addCardToTable(model, card) {
+  // TODO
+}
+
+function removeFromHand(playerModel, card) {
+  // TODO
+}
+
+
+function updateScores(model) {
+  // TODO
 }
