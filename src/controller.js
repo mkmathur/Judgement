@@ -4,7 +4,7 @@ import * as Model from './model.js';
 
 const DUMMY_GAME = 123;
 
-export function makeGame() {
+function makeGame() {
   // TODO: maybe move this to REST API?
 }
 
@@ -21,12 +21,12 @@ export function startGame(gameID) {
   startRound();
 }
 
-export function startRound(gameID) {
+function startRound(gameID) {
   const model = new Model(DUMMY_GAME);
 
   const nextRoundNumber = Game.nextRoundNumber(model.roundNumber, model.maxRoundNumber);
   if (nextRoundNumber == 0) {
-    endGame();
+    endGame(model);
     return;
   }
 
@@ -64,11 +64,14 @@ export function playCard(gameID, playerID, card) {
   addCardToTable(model, card);
   removeFromHand(playerModel, card);
   if (model.table.length == model.numPlayers) {
-    endRound(model);
+    endTrick(model);
   }
 }
 
-function endRound(model) {
+
+// HELPERS
+
+function endTrick(model) {
     const winner = Game.determineTrickWinner(model.table, model.chaal, model.trump);
     const winnerModel = model.getPlayer(winner);
     winnerModel.tricks = winnerModel.tricks + 1;
@@ -78,8 +81,7 @@ function endRound(model) {
     }
 }
 
-function endGame() {
-  const model = new Model(DUMMY_GAME);
+function endGame(model) {
 
 }
 

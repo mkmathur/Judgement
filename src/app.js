@@ -17,10 +17,6 @@ io.on('connection', (socket) => {
     Controller.startGame(msg.gameID);
   });
 
-  socket.on('startRound', (msg) => {
-    Controller.startRound(msg.gameID);
-  });
-
   socket.on('makeJudgement', (msg) => {
     Controller.makeJudgement(msg.gameID, msg.playerID, msg.judgement);
   });
