@@ -9,12 +9,26 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  socket.on('makeGame', Controller.makeGame);
-  socket.on('addPlayer', Controller.addPlayer);
-  socket.on('startGame', Controller.startGame);
-  socket.on('startRound', Controller.startRound);
-  socket.on('makeJudgement', Controller.makeJudgement);
-  socket.on('playCard', Controller.playCard);
+  socket.on('addPlayer', (msg) => {
+    Controller.addPlayer(msg.gameID, msg.name);
+  });
+
+  socket.on('startGame', (msg) => {
+    Controller.startGame(msg.gameID);
+  });
+
+  socket.on('startRound', (msg) => {
+    Controller.startRound(msg.gameID);
+  });
+
+  socket.on('makeJudgement', (msg) => {
+    Controller.makeJudgement(msg.gameID, msg.playerID, msg.judgement);
+  });
+
+  socket.on('playCard', (msg) => {
+    Controller.playCard(msg.gameID, msg.playerID, msg.card);
+  });
+
 });
 
 http.listen(3000, () => {

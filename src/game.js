@@ -19,6 +19,14 @@ export function nextTrump(suit) {
 
 }
 
+export function nextPlayer(playerID) {
+
+}
+
+export function validateCard(card, hand, table, chaal) {
+
+}
+
 export function determineTrickWinner(table, chaal, trump) {
 
 }

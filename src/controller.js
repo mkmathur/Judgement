@@ -4,24 +4,24 @@ import * as Model from './model.js';
 
 const DUMMY_GAME = 123;
 
-export function makeGame(data) {
+export function makeGame() {
   // TODO: maybe move this to REST API?
 }
 
-export function addPlayer(data) {
+export function addPlayer(gameID, name) {
   const model = new Model(DUMMY_GAME);
-  model.addPlayer(data.playerName);
+  model.addPlayer(name);
 }
 
-export function startGame(data) {
+export function startGame(gameID) {
   const model = new Model(DUMMY_GAME);
   initializeDeck(model);
   model.roundNumber = 0;
   model.maxRoundNumber = Game.maxRoundNumber(model.numPlayers);
-  startRound(data);
+  startRound();
 }
 
-export function startRound(data) {
+export function startRound(gameID) {
   const model = new Model(DUMMY_GAME);
 
   const nextRoundNumber = Game.nextRoundNumber(model.roundNumber, model.maxRoundNumber);
@@ -40,11 +40,11 @@ export function startRound(data) {
   model.state = Game.STATES.WAITING_FOR_JUDGEMENTS;
 }
 
-export function makeJudgement(data) {
+export function makeJudgement(gameID, playerID, judgement) {
   const model = new Model(DUMMY_GAME);
-  const playerModel = model.getPlayer(data.playerID);
+  const playerModel = model.getPlayer(playerID);
   if (playerModel.judgement != null) {
-    playerModel.judgement = data.judgement;
+    playerModel.judgement = judgement;
     model.numJudgements = model.numJudgements + 1
     if (model.numJudgements == model.numPlayers) {
       model.state = Game.STATES.WAITING_FOR_CARD;
@@ -52,17 +52,17 @@ export function makeJudgement(data) {
   }
 }
 
-export function playCard(data) {
+export function playCard(gameID, playerID, card) {
   const model = new Model(DUMMY_GAME);
-  const playerModel = model.getPlayer(data.playerID);
-  if (data.playerID == model.firstPlayer) {
-    model.chaal = data.card.suit;
+  const playerModel = model.getPlayer(playerID);
+  if (playerID == model.firstPlayer) {
+    model.chaal = card.suit;
   }
   else {
-    if (!Game.validateCard(data.card, playerModel.hand, model.table, model.chaal)) return;
+    if (!Game.validateCard(card, playerModel.hand, model.table, model.chaal)) return;
   }
-  addCardToTable(model, data.card);
-  removeFromHand(playerModel, data.card);
+  addCardToTable(model, card);
+  removeFromHand(playerModel, card);
   if (model.table.length == model.numPlayers) {
     endRound(model);
   }
@@ -74,7 +74,7 @@ function endRound(model) {
     winnerModel.tricks = winnerModel.tricks + 1;
     if (winnerModel.hand.length == 0) {
       updateScores(model);
-      startRound(data);
+      startRound();
     }
 }
 
