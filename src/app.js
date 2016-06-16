@@ -1,8 +1,16 @@
 const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const firebase = require("firebase");
 
 import * as Controller from './controller.js';
+
+firebase.initializeApp({
+  serviceAccount: "firebaseCredentials.json",
+  databaseURL: "https://project-6638516275584701777.firebaseio.com/"
+});
+
+const db = firebase.database();
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello world</h1>');
@@ -10,19 +18,20 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
   socket.on('addPlayer', (msg) => {
-    Controller.addPlayer(msg.gameID, msg.name);
+    console.log('add player');
+    Controller.addPlayer(db, msg.gameID, msg.name);
   });
 
   socket.on('startGame', (msg) => {
-    Controller.startGame(msg.gameID);
+    Controller.startGame(db, msg.gameID);
   });
 
   socket.on('makeJudgement', (msg) => {
-    Controller.makeJudgement(msg.gameID, msg.playerID, msg.judgement);
+    Controller.makeJudgement(db, msg.gameID, msg.playerID, msg.judgement);
   });
 
   socket.on('playCard', (msg) => {
-    Controller.playCard(msg.gameID, msg.playerID, msg.card);
+    Controller.playCard(db, msg.gameID, msg.playerID, msg.card);
   });
 
 });

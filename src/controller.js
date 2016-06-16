@@ -8,40 +8,21 @@ function makeGame() {
   // TODO: maybe move this to REST API?
 }
 
-export function addPlayer(gameID, name) {
-  const model = new Model(DUMMY_GAME);
+export function addPlayer(db, gameID, name) {
+  const model = new Model(db, DUMMY_GAME);
   model.addPlayer(name);
 }
 
-export function startGame(gameID) {
-  const model = new Model(DUMMY_GAME);
+export function startGame(db, gameID) {
+  const model = new Model(db, DUMMY_GAME);
   initializeDeck(model);
   model.roundNumber = 0;
   model.maxRoundNumber = Game.maxRoundNumber(model.numPlayers);
-  startRound();
+  startRound(model);
 }
 
-function startRound(gameID) {
-  const model = new Model(DUMMY_GAME);
-
-  const nextRoundNumber = Game.nextRoundNumber(model.roundNumber, model.maxRoundNumber);
-  if (nextRoundNumber == 0) {
-    endGame(model);
-    return;
-  }
-
-  shuffleDeck(model);
-  model.roundNumber = nextRoundNumber;
-  resetTricks();
-  model.trump = Game.nextTrump(model.trump);
-  deal(model);
-  model.firstPlayer = Game.nextPlayer(model.firstPlayer);
-  model.numJudgements = 0;
-  model.state = Game.STATES.WAITING_FOR_JUDGEMENTS;
-}
-
-export function makeJudgement(gameID, playerID, judgement) {
-  const model = new Model(DUMMY_GAME);
+export function makeJudgement(db, gameID, playerID, judgement) {
+  const model = new Model(db, DUMMY_GAME);
   const playerModel = model.getPlayer(playerID);
   if (playerModel.judgement != null) {
     playerModel.judgement = judgement;
@@ -52,8 +33,8 @@ export function makeJudgement(gameID, playerID, judgement) {
   }
 }
 
-export function playCard(gameID, playerID, card) {
-  const model = new Model(DUMMY_GAME);
+export function playCard(db, gameID, playerID, card) {
+  const model = new Model(db, DUMMY_GAME);
   const playerModel = model.getPlayer(playerID);
   if (playerID == model.firstPlayer) {
     model.chaal = card.suit;
@@ -70,6 +51,23 @@ export function playCard(gameID, playerID, card) {
 
 
 // HELPERS
+
+function startRound(model) {
+  const nextRoundNumber = Game.nextRoundNumber(model.roundNumber, model.maxRoundNumber);
+  if (nextRoundNumber == 0) {
+    endGame(model);
+    return;
+  }
+
+  shuffleDeck(model);
+  model.roundNumber = nextRoundNumber;
+  resetTricks();
+  model.trump = Game.nextTrump(model.trump);
+  deal(model);
+  model.firstPlayer = Game.nextPlayer(model.firstPlayer);
+  model.numJudgements = 0;
+  model.state = Game.STATES.WAITING_FOR_JUDGEMENTS;
+}
 
 function endTrick(model) {
     const winner = Game.determineTrickWinner(model.table, model.chaal, model.trump);

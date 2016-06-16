@@ -1,10 +1,10 @@
 export class Model {
-  constructor(gameID) {
-    // Init firebase
+  constructor(db, gameID) {
+    this.gameRef = db.ref('games/${gameID}');
   }
 
   addPlayer(name) {
-
+    this.gameRef.ref('players').push(name);
   }
 
   // get list of player IDs
@@ -13,7 +13,7 @@ export class Model {
   }
 
   getPlayer(playerID) {
-    return new PlayerModel(gameID, playerID);
+    return new PlayerModel(gameRef, playerID);
   }
 
   get numPlayers() {
@@ -91,8 +91,8 @@ export class Model {
 }
 
 class PlayerModel {
-  constructor(gameID, playerID) {
-    // Init firebase ref
+  constructor(gameRef, playerID) {
+
   }
 
   set hand(cards) {
