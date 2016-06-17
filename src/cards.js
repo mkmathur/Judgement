@@ -30,7 +30,13 @@ export class Card extends Immutable.Record({ suit: 0, value: 1 }) {
 
 // Returns a deck containing all 52 cards.
 export function initializeDeck() {
-
+  let deck = new Array();
+  for (let s = 0; s < 4; s++) {
+    for (let v = 1; v <= 13; v++) {
+      deck[deck.length] = new Card({suit: SUITS[s], value: VALUES[v]});
+    }
+  }
+  return deck;
 }
 
 // Returns the shuffled deck.
