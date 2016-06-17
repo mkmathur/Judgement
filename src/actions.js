@@ -10,11 +10,18 @@ function makeGame() {
 
 export function addPlayer(db, gameID, name) {
   const model = new Model(db, DUMMY_GAME);
-  model.addPlayer(name);
+  if (model.state == Game.STATES.WAITING_FOR_PLAYERS) {
+    model.addPlayer(name);
+  }
 }
 
 export function startGame(db, gameID) {
   const model = new Model(db, DUMMY_GAME);
+  if (model.state != Game.STATES.WAITING_FOR_PLAYERS) {
+    return;
+  }
+
+  model.state = Game.STATES.STARTING_GAME;
   initializeDeck(model);
   model.roundNumber = 0;
   model.maxRoundNumber = Game.maxRoundNumber(model.numPlayers);
@@ -23,6 +30,10 @@ export function startGame(db, gameID) {
 
 export function makeJudgement(db, gameID, playerID, judgement) {
   const model = new Model(db, DUMMY_GAME);
+  if (model.state != Game.STATES.WAITING_FOR_JUDGEMENTS) {
+    return;
+  }
+
   const playerModel = model.getPlayer(playerID);
   if (playerModel.judgement != null) {
     playerModel.judgement = judgement;
@@ -35,6 +46,10 @@ export function makeJudgement(db, gameID, playerID, judgement) {
 
 export function playCard(db, gameID, playerID, card) {
   const model = new Model(db, DUMMY_GAME);
+  if (model.state != Game.STATES.WAITING_FOR_CARD || model.nextTurn != playerID) {
+    return;
+  }
+
   const playerModel = model.getPlayer(playerID);
   if (playerID == model.firstPlayer) {
     model.chaal = card.suit;
