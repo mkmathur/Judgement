@@ -14,7 +14,7 @@ const VALUES = {
   11: 'Jack',
   12: 'Queen',
   13: 'King'
-}
+};
 
 for (let i = 2; i < 11; i++) {
   VALUES[i] = i.toString();
