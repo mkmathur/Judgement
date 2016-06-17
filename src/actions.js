@@ -2,7 +2,7 @@ import * as Cards from './Cards.js';
 import * as Game from './game.js';
 import * as Model from './model.js';
 
-const DUMMY_GAME = 123;
+const DUMMY_GAME = 'rysE3FxS';
 
 function makeGame() {
   // TODO: maybe move this to REST API?
