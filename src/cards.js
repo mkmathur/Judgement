@@ -41,5 +41,21 @@ export function initializeDeck() {
 
 // Returns the shuffled deck.
 export function shuffle(deck) {
+  var copy = [], n = deck.length, i;
 
+  // While there remain elements to shuffle…
+  while (n) {
+
+    // Pick a remaining element…
+    i = Math.floor(Math.random() * deck.length);
+
+    // If not already shuffled, move it to the new array.
+    if (i in deck) {
+      copy.push(deck[i]);
+      delete deck[i];
+      n--;
+    }
+  }
+
+  return copy;
 }

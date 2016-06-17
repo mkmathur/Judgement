@@ -85,14 +85,12 @@ function endGame(model) {
 
 function initializeDeck(model) {
   const deck = Cards.initializeDeck();
-  Cards.shuffle(deck);
-  model.deck = deck;
+  model.deck = Cards.shuffle(deck);
 }
 
 function shuffleDeck(model) {
   const deck = model.deck;
-  Cards.shuffle(deck);
-  model.deck = deck;
+  model.deck = Cards.shuffle(deck);
 }
 
 function deal(model) {
