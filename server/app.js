@@ -1,9 +1,10 @@
-const app = require('express')();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
-const firebase = require("firebase");
+import express from 'express';
+import firebase from 'firebase';
 
 import * as Actions from './actions.js';
+
+const app = express();
+app.set('port', (process.env.API_PORT || 3001));
 
 firebase.initializeApp({
   serviceAccount: "firebaseCredentials.json",
@@ -16,25 +17,25 @@ app.get('/', (req, res) => {
   res.send('<h1>Hello world</h1>');
 });
 
-io.on('connection', (socket) => {
-  socket.on('addPlayer', (msg) => {
-    Actions.addPlayer(db, msg.gameID, msg.name);
-  });
+// io.on('connection', (socket) => {
+//   socket.on('addPlayer', (msg) => {
+//     Actions.addPlayer(db, msg.gameID, msg.name);
+//   });
 
-  socket.on('startGame', (msg) => {
-    Actions.startGame(db, msg.gameID);
-  });
+//   socket.on('startGame', (msg) => {
+//     Actions.startGame(db, msg.gameID);
+//   });
 
-  socket.on('makeJudgement', (msg) => {
-    Actions.makeJudgement(db, msg.gameID, msg.playerID, msg.judgement);
-  });
+//   socket.on('makeJudgement', (msg) => {
+//     Actions.makeJudgement(db, msg.gameID, msg.playerID, msg.judgement);
+//   });
 
-  socket.on('playCard', (msg) => {
-    Actions.playCard(db, msg.gameID, msg.playerID, msg.card);
-  });
+//   socket.on('playCard', (msg) => {
+//     Actions.playCard(db, msg.gameID, msg.playerID, msg.card);
+//   });
 
-});
+// });
 
-http.listen(3000, () => {
-  console.log('listening on *:3000');
+app.listen(app.get('port'), () => {
+  console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
 });
