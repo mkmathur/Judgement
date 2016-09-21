@@ -126,3 +126,4 @@ class PlayerModel {
   get judgement() {
 
   }
+}
