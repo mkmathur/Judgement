@@ -20,11 +20,21 @@ const Intro = () => (
   </div>
 );
 
+const createGame = (playerName) => {
+  fetch("/api/createGame", {method: "GET"})
+  .then(response => {
+    return response.text();
+  })
+  .then(gameId => {
+    browserHistory.push(`/play/${gameId}`);
+  })
+};
+
 const NewGame = () => (
   <div className="NewGame">
     <Header />
     <input type="text" placeholder="Enter your name" />
-    <button>Create</button>
+    <button onClick={createGame}>Create</button>
     <Link to="/">
       <button>Back</button>
     </Link>
@@ -43,11 +53,18 @@ const JoinGame = () => (
   </div>
 );
 
+const PlayGame = () => (
+  <div className="PlayGame">
+    <Header />
+  </div>
+);
+
 const App = () => (
   <Router history={browserHistory}>
     <Route path="/" component={Intro} />
     <Route path="/new" component={NewGame} />
     <Route path="/join" component={JoinGame} />
+    <Route path="/play/:id" component={PlayGame} />
   </Router>
 );
 
