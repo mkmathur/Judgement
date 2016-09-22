@@ -1,8 +1,11 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import api from './api';
 
 const app = express();
 app.set('port', (process.env.API_PORT || 3001));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello world</h1>');

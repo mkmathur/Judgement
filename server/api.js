@@ -18,4 +18,11 @@ api.get('/createGame', (req, res) => {
   });
 });
 
+api.post('/addPlayer', (req, res) => {
+  const playerName = req.body.playerName;
+  const gameId = req.body.gameId;
+  console.log(playerName)
+  res.send(200);
+});
+
 export default api;
