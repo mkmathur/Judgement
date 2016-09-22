@@ -1,6 +1,14 @@
 import React from 'react';
 import {Router, Route, Link, browserHistory} from 'react-router';
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+
 import './App.css';
+
+injectTapEventPlugin();
 
 const Header = () => (
   <div className="Header">
@@ -8,14 +16,18 @@ const Header = () => (
   </div>
 )
 
+const buttonStyle = {
+  margin: 5,
+};
+
 const Intro = () => (
   <div className="Intro">
     <Header />
     <Link to="/new">
-      <button>New Game</button>
+      <RaisedButton label="New Game" primary style={buttonStyle} />
     </Link>
     <Link to="/join">
-      <button>Join Game</button>
+      <RaisedButton label="Join Game" primary style={buttonStyle} />
     </Link>
   </div>
 );
@@ -67,12 +79,14 @@ const PlayGame = () => (
 );
 
 const App = () => (
-  <Router history={browserHistory}>
-    <Route path="/" component={Intro} />
-    <Route path="/new" component={NewGame} />
-    <Route path="/join" component={JoinGame} />
-    <Route path="/play/:id" component={PlayGame} />
-  </Router>
+  <MuiThemeProvider>
+    <Router history={browserHistory}>
+      <Route path="/" component={Intro} />
+      <Route path="/new" component={NewGame} />
+      <Route path="/join" component={JoinGame} />
+      <Route path="/play/:id" component={PlayGame} />
+    </Router>
+  </MuiThemeProvider>
 );
 
 export default App;
