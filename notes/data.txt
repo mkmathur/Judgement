@@ -1,5 +1,22 @@
 GAME
 
+Players
+  Player
+    name
+    score
+    tricks
+    hand
+    judgement
+Deck
+Table
+Current round num
+Max round num
+Judgements received
+Trump
+Chaal
+First player
+State
+
 - Players
   - id (int), name (String)
 - Deck

@@ -21,7 +21,14 @@ const Intro = () => (
 );
 
 const createGame = (playerName) => {
-  fetch("/api/createGame", {method: "GET"})
+  fetch("/api/createGame", {
+    method: "POST",
+    body: JSON.stringify({ playerName: playerName }),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    })
+  })
   .then(response => {
     return response.text();
   })
@@ -34,7 +41,7 @@ const NewGame = () => (
   <div className="NewGame">
     <Header />
     <input type="text" placeholder="Enter your name" />
-    <button onClick={createGame}>Create</button>
+    <button onClick={() => createGame("mom")}>Create</button>
     <Link to="/">
       <button>Back</button>
     </Link>
