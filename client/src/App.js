@@ -49,16 +49,34 @@ const createGame = (playerName) => {
   })
 };
 
-const NewGame = () => (
-  <div className="NewGame">
-    <Header />
-    <input type="text" placeholder="Enter your name" />
-    <button onClick={() => createGame("mom")}>Create</button>
-    <Link to="/">
-      <button>Back</button>
-    </Link>
-  </div>
-);
+class NewGame extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: ""
+    };
+    this.onChangeName = this.onChangeName.bind(this);
+  }
+
+  onChangeName(e) {
+    this.setState({
+      name: e.target.value
+    });
+  }
+
+  render() {
+    return (
+      <div className="NewGame">
+        <Header />
+        <TextField hintText="Enter your name" onChange={this.onChangeName} />
+        <Link to="/">
+          <RaisedButton label="Back" style={buttonStyle} />
+        </Link>
+        <RaisedButton label="Create" primary style={buttonStyle} onTouchTap={() => createGame(this.state.name)} />
+      </div>
+    );
+  }
+}
 
 const JoinGame = () => (
   <div className="JoinGame">
