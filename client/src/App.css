@@ -2,14 +2,14 @@
   font-family: 'Roboto', sans-serif;
 }
 
-.Intro, .NewGame {
+.Intro, .NewGame, .JoinGame {
   margin-top: 25%;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
-.NewGame--buttons {
+.NewGame--buttons, .JoinGame--buttons {
   display: flex;
   flex-direction: row;
   margin-top: 15px;

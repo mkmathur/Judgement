@@ -80,17 +80,45 @@ class NewGame extends React.Component {
   }
 }
 
-const JoinGame = () => (
-  <div className="JoinGame">
-    <Header />
-    <input type="text" placeholder="Enter an access code" />
-    <input type="text" placeholder="Enter your name" />
-    <button>Join</button>
-    <Link to="/">
-      <button>Back</button>
-    </Link>
-  </div>
-);
+class JoinGame extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      accessCode: "",
+      name: "",
+    };
+    this.onChangeAccessCode = this.onChangeAccessCode.bind(this);
+    this.onChangeName = this.onChangeName.bind(this);
+  }
+
+  onChangeAccessCode(e) {
+    this.setState({
+      accessCode: e.target.value
+    });
+  }
+
+  onChangeName(e) {
+    this.setState({
+      name: e.target.value
+    });
+  }
+
+  render() {
+    return (
+      <div className="JoinGame">
+        <Header />
+        <TextField hintText="Enter an access code" onChange={this.onChangeAccessCode} />
+        <TextField hintText="Enter your name" onChange={this.onChangeName} />
+        <div className="JoinGame--buttons">
+          <Link to="/">
+            <RaisedButton label="Back" style={buttonStyle} />
+          </Link>
+          <RaisedButton label="join" primary style={buttonStyle} />
+        </div>
+      </div>
+    );
+  }
+}
 
 const PlayGame = () => (
   <div className="PlayGame">
