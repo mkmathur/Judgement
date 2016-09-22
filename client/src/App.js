@@ -1,4 +1,5 @@
 import React from 'react';
+import {Router, Route, browserHistory} from 'react-router';
 import './App.css';
 
 const IntroView = () => (
@@ -12,7 +13,9 @@ const IntroView = () => (
 );
 
 const App = () => (
-  <IntroView />    
+  <Router history={browserHistory}>
+    <Route path="/" component={IntroView} />
+  </Router>
 );
 
 export default App;
