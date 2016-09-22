@@ -11,7 +11,9 @@ const db = firebase.database();
 const api = express.Router();
 
 api.get('/createGame', (req, res) => {
-  generateUnique(db).then(id => {
+  const gamesListRef = db.ref('/games');
+  generateUnique(gamesListRef).then(id => {
+    gamesListRef.push(id);
     res.send(id);
   });
 });

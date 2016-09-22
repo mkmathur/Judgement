@@ -10,8 +10,8 @@ const generate = () => {
   return result;
 };
 
-export const generateUnique = (db) => {
-  return db.ref('/games').once('value').then((snapshot) => {
+export const generateUnique = (gamesListRef) => {
+  return gamesListRef.once('value').then((snapshot) => {
     let id;
     let retries = 0;
 
