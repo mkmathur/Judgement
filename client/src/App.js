@@ -69,10 +69,12 @@ class NewGame extends React.Component {
       <div className="NewGame">
         <Header />
         <TextField hintText="Enter your name" onChange={this.onChangeName} />
-        <Link to="/">
-          <RaisedButton label="Back" style={buttonStyle} />
-        </Link>
-        <RaisedButton label="Create" primary style={buttonStyle} onTouchTap={() => createGame(this.state.name)} />
+        <div className="NewGame--buttons">
+          <Link to="/">
+            <RaisedButton label="Back" style={buttonStyle} />
+          </Link>
+          <RaisedButton label="Create" primary style={buttonStyle} onTouchTap={() => createGame(this.state.name)} />
+        </div>
       </div>
     );
   }
