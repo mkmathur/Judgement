@@ -12,9 +12,10 @@ const api = express.Router();
 
 api.post('/games', (req, res) => {
   const playerName = req.body.playerName;
-  const gamesListRef = db.ref('/games');
-  generateUnique(gamesListRef).then(id => {
-    db.ref(`/games/${id}/players`).child(0).set(playerName);
+  const gamesRef = db.ref('/games');
+  generateUnique(gamesRef).then(id => {
+    const playersRef = db.ref(`/games/${id}/players`);
+    playersRef.child(0).child("name").set(playerName);
     res.send(id);
   });
 });
@@ -22,11 +23,14 @@ api.post('/games', (req, res) => {
 api.post('/players', (req, res) => {
   const playerName = req.body.playerName;
   const gameId = req.body.gameId;
+  const playersRef = db.ref(`/games/${gameId}/players`);
 
-  db.ref(`/games/${gameId}/players`).transaction((players) => {
+  playersRef.transaction(players => {
     if (players) {
       const playerId = Object.keys(players).length;
-      players[playerId] = playerName;
+      players[playerId] = {
+        name: playerName
+      };
     }
     return players;
   });
