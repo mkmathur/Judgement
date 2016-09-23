@@ -1,5 +1,6 @@
 import React from 'react';
 import {Router, Route, Link, browserHistory} from 'react-router';
+import Firebase from 'firebase';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -9,6 +10,15 @@ import TextField from 'material-ui/TextField';
 import './App.css';
 
 injectTapEventPlugin();
+
+Firebase.initializeApp({
+  apiKey: "AIzaSyDTdcoqVfNhd8wcEoUPCLPzb7uEu4qx3To",
+  authDomain: "project-6638516275584701777.firebaseapp.com",
+  databaseURL: "https://project-6638516275584701777.firebaseio.com",
+  storageBucket: "project-6638516275584701777.appspot.com",
+});
+
+const db = Firebase.database();
 
 const buttonStyle = {
   margin: 5,
@@ -116,24 +126,47 @@ class JoinGame extends React.Component {
   }
 }
 
-const names = ["Mallika", "Pranav", "Kanchan", "Atul"]
+class WaitingForPlayers extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      players: []
+    };
+  }
+
+  componentWillMount() {
+    this.playersRef = db.ref(`/games/${this.props.gameId}/players`);
+    this.playersRef.on('child_added', (snapshot) => {
+      this.state.players.push(snapshot.val());
+      this.setState({
+        players: this.state.players
+      });
+    }); 
+  }
+
+  render() {
+    return (
+      <div className="intro-container">
+        <h2>Waiting for players...</h2>
+        <p>Access code: <span className="code">{this.props.gameId}</span></p>
+        <ul>
+          {
+            this.state.players.map(name => (
+              <li>{name}</li>    
+            ))
+          }
+        </ul>
+        <div className="button-row">
+          <RaisedButton label="Leave Game" style={buttonStyle} />
+          <RaisedButton label="Start Game" primary style={buttonStyle} />
+        </div>
+      </div>
+    );
+  }
+}
 
 const PlayGame = ({params}) => (
-  <div className="intro-container">
-    <h2>Waiting for players...</h2>
-    <p>Access code: <span className="code">{params.id}</span></p>
-    <ul>
-      {
-        names.map(name => (
-          <li>{name}</li>    
-        ))
-      }
-    </ul>
-    <div className="button-row">
-      <RaisedButton label="Leave Game" style={buttonStyle} />
-      <RaisedButton label="Start Game" primary style={buttonStyle} />
-    </div>
-  </div>
+  <WaitingForPlayers gameId={params.id} />
 );
 
 const App = () => (
