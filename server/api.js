@@ -10,6 +10,8 @@ firebase.initializeApp({
 const db = firebase.database();
 const api = express.Router();
 
+const failure = error => res.sendStatus(500)
+
 api.post('/games', (req, res) => {
   const playerName = req.body.playerName;
   const gamesRef = db.ref('/games');
@@ -25,16 +27,24 @@ api.post('/players', (req, res) => {
   const gameId = req.body.gameId;
   const playersRef = db.ref(`/games/${gameId}/players`);
 
-  playersRef.transaction(currentData => {
+  const addPlayer = (currentData) => {
     const playerId = currentData ? Object.keys(currentData).length : 0;
     const newData = currentData || {};
     newData[playerId] = {
       name: playerName
     };
     return newData;
-  });
+  }
 
-  res.send(200);
+  const success = ({committed, snapshot}) => {
+    const players = snapshot.val();
+    res.status(200).send({
+      players,
+      playerId: players.length - 1,
+    });
+  }
+
+  playersRef.transaction(addPlayer).then(success, failure);
 });
 
 export default api;
