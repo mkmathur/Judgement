@@ -10,25 +10,21 @@ import './App.css';
 
 injectTapEventPlugin();
 
-const Header = () => (
-  <div className="Header">
-    <h2>Judgement</h2>
-  </div>
-)
-
 const buttonStyle = {
   margin: 5,
 };
 
 const Intro = () => (
-  <div className="Intro">
-    <Header />
-    <Link to="/new">
-      <RaisedButton label="New Game" primary style={buttonStyle} />
-    </Link>
-    <Link to="/join">
-      <RaisedButton label="Join Game" primary style={buttonStyle} />
-    </Link>
+  <div className="intro-container">
+    <h2>Judgement</h2>
+    <div className="button-row">
+      <Link to="/new">
+        <RaisedButton label="New Game" primary style={buttonStyle} />
+      </Link>
+      <Link to="/join">
+        <RaisedButton label="Join Game" primary style={buttonStyle} />
+      </Link>
+    </div>
   </div>
 );
 
@@ -66,10 +62,10 @@ class NewGame extends React.Component {
 
   render() {
     return (
-      <div className="NewGame">
-        <Header />
+      <div className="intro-container">
+        <h2>Judgement</h2>
         <TextField hintText="Enter your name" onChange={this.onChangeName} />
-        <div className="NewGame--buttons">
+        <div className="button-row">
           <Link to="/">
             <RaisedButton label="Back" style={buttonStyle} />
           </Link>
@@ -105,11 +101,11 @@ class JoinGame extends React.Component {
 
   render() {
     return (
-      <div className="JoinGame">
-        <Header />
+      <div className="intro-container">
+        <h2>Judgement</h2>
         <TextField hintText="Enter an access code" onChange={this.onChangeAccessCode} />
         <TextField hintText="Enter your name" onChange={this.onChangeName} />
-        <div className="JoinGame--buttons">
+        <div className="button-row">
           <Link to="/">
             <RaisedButton label="Back" style={buttonStyle} />
           </Link>
@@ -120,9 +116,23 @@ class JoinGame extends React.Component {
   }
 }
 
-const PlayGame = () => (
-  <div className="PlayGame">
-    <Header />
+const names = ["Mallika", "Pranav", "Kanchan", "Atul"]
+
+const PlayGame = ({params}) => (
+  <div className="intro-container">
+    <h2>Waiting for players...</h2>
+    <p>Access code: <span className="code">{params.id}</span></p>
+    <ul>
+      {
+        names.map(name => (
+          <li>{name}</li>    
+        ))
+      }
+    </ul>
+    <div className="button-row">
+      <RaisedButton label="Leave Game" style={buttonStyle} />
+      <RaisedButton label="Start Game" primary style={buttonStyle} />
+    </div>
   </div>
 );
 
