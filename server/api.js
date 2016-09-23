@@ -22,6 +22,7 @@ api.post('/createGame', (req, res) => {
 api.post('/addPlayer', (req, res) => {
   const playerName = req.body.playerName;
   const gameId = req.body.gameId;
+  db.ref('/games').child(`/${gameId}`).child('/players').push(playerName);
   res.send(200);
 });
 

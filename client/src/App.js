@@ -55,6 +55,20 @@ const createGame = (playerName) => {
   })
 };
 
+const joinGame = (gameId, playerName) => {
+  fetch("/api/addPlayer", {
+    method: "POST",
+    body: JSON.stringify({ playerName: playerName, gameId: gameId }),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    })
+  })
+  .then(() => {
+    browserHistory.push(`/play/${gameId}`);
+  })
+}
+
 class NewGame extends React.Component {
   constructor(props) {
     super(props);
@@ -119,7 +133,7 @@ class JoinGame extends React.Component {
           <Link to="/">
             <RaisedButton label="Back" style={buttonStyle} />
           </Link>
-          <RaisedButton label="join" primary style={buttonStyle} />
+          <RaisedButton label="join" primary style={buttonStyle} onTouchTap={() => joinGame(this.state.accessCode, this.state.name)}/>
         </div>
       </div>
     );
