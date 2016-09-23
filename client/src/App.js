@@ -39,7 +39,7 @@ const Home = () => (
 );
 
 const createGame = (playerName) => {
-  fetch("/api/createGame", {
+  fetch("/api/games", {
     method: "POST",
     body: JSON.stringify({ playerName: playerName }),
     headers: new Headers({
@@ -56,7 +56,7 @@ const createGame = (playerName) => {
 };
 
 const joinGame = (gameId, playerName) => {
-  fetch("/api/addPlayer", {
+  fetch("/api/players", {
     method: "POST",
     body: JSON.stringify({ playerName: playerName, gameId: gameId }),
     headers: new Headers({

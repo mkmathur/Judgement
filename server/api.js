@@ -10,7 +10,7 @@ firebase.initializeApp({
 const db = firebase.database();
 const api = express.Router();
 
-api.post('/createGame', (req, res) => {
+api.post('/games', (req, res) => {
   const playerName = req.body.playerName;
   const gamesListRef = db.ref('/games');
   generateUnique(gamesListRef).then(id => {
@@ -19,7 +19,7 @@ api.post('/createGame', (req, res) => {
   });
 });
 
-api.post('/addPlayer', (req, res) => {
+api.post('/players', (req, res) => {
   const playerName = req.body.playerName;
   const gameId = req.body.gameId;
   db.ref('/games').child(`/${gameId}`).child('/players').push(playerName);
