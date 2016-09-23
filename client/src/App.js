@@ -151,7 +151,10 @@ class WaitingForPlayers extends React.Component {
   componentWillMount() {
     this.playersRef = db.ref(`/games/${this.props.gameId}/players`);
     this.playersRef.on('child_added', (snapshot) => {
-      this.state.players.push(snapshot.val());
+      this.state.players.push({
+        id: snapshot.key,
+        name: snapshot.val().name,
+      });
       this.setState({
         players: this.state.players
       });
@@ -165,8 +168,8 @@ class WaitingForPlayers extends React.Component {
         <p>Access code: <span className="code">{this.props.gameId}</span></p>
         <ul>
           {
-            this.state.players.map(name => (
-              <li>{name}</li>    
+            this.state.players.map(player => (
+              <li key={player.id}>{player.name}</li>    
             ))
           }
         </ul>
