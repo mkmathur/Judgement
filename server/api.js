@@ -25,14 +25,13 @@ api.post('/players', (req, res) => {
   const gameId = req.body.gameId;
   const playersRef = db.ref(`/games/${gameId}/players`);
 
-  playersRef.transaction(players => {
-    if (players) {
-      const playerId = Object.keys(players).length;
-      players[playerId] = {
-        name: playerName
-      };
-    }
-    return players;
+  playersRef.transaction(currentData => {
+    const playerId = currentData ? Object.keys(currentData).length : 0;
+    const newData = currentData || {};
+    newData[playerId] = {
+      name: playerName
+    };
+    return newData;
   });
 
   res.send(200);
