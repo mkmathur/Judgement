@@ -1,16 +1,31 @@
 #root {
+  margin-top: 10%;
   font-family: 'Roboto', sans-serif;
 }
 
-.Intro, .NewGame, .JoinGame {
-  margin-top: 25%;
+.intro-container {
   display: flex;
   align-items: center;
   flex-direction: column;
+  width: 80%;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
-.NewGame--buttons, .JoinGame--buttons {
+.button-row {
   display: flex;
   flex-direction: row;
   margin-top: 15px;
+}
+
+.intro-container p {
+  margin-top: 0;
+}
+
+.intro-container ul {
+  align-self: flex-start;
+}
+
+.code {
+  font-family: 'Source Code Pro', monospace;
 }
