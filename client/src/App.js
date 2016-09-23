@@ -24,7 +24,7 @@ const buttonStyle = {
   margin: 5,
 };
 
-const Intro = () => (
+const Home = () => (
   <div className="intro-container">
     <h2>Judgement</h2>
     <div className="button-row">
@@ -186,7 +186,7 @@ const PlayGame = ({params}) => (
 const App = () => (
   <MuiThemeProvider>
     <Router history={browserHistory}>
-      <Route path="/" component={Intro} />
+      <Route path="/" component={Home} />
       <Route path="/new" component={NewGame} />
       <Route path="/join" component={JoinGame} />
       <Route path="/play/:id" component={PlayGame} />
