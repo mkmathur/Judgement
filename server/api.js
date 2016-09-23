@@ -14,8 +14,7 @@ api.post('/createGame', (req, res) => {
   const playerName = req.body.playerName;
   const gamesListRef = db.ref('/games');
   generateUnique(gamesListRef).then(id => {
-    const gameRef = gamesListRef.push(id);
-    const playerKey = gameRef.child("/players").push(playerName).key;
+    db.ref('/games').child(`/${id}`).child('/players').push(playerName);
     res.send(id);
   });
 });
