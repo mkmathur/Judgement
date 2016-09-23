@@ -14,7 +14,7 @@ api.post('/games', (req, res) => {
   const playerName = req.body.playerName;
   const gamesListRef = db.ref('/games');
   generateUnique(gamesListRef).then(id => {
-    db.ref('/games').child(`/${id}`).child('/players').push(playerName);
+    db.ref(`/games/${id}/players`).push(playerName);
     res.send(id);
   });
 });
@@ -22,7 +22,7 @@ api.post('/games', (req, res) => {
 api.post('/players', (req, res) => {
   const playerName = req.body.playerName;
   const gameId = req.body.gameId;
-  db.ref('/games').child(`/${gameId}`).child('/players').push(playerName);
+  db.ref(`/games/${gameId}/players`).push(playerName);
   res.send(200);
 });
 
