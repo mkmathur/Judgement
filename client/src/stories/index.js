@@ -3,6 +3,7 @@ import { storiesOf, action, linkTo } from '@kadira/storybook';
 import Button from './Button';
 import Welcome from './Welcome';
 import Card from '../components/Card';
+import Hand from '../components/Hand';
 
 storiesOf('Welcome', module)
   .add('to Storybook', () => (
@@ -23,4 +24,18 @@ storiesOf('Card', module)
   ))
   .add('face card', () => (
     <Card rank="Q" suit="H" />
+  ))
+
+const cards = [
+  { rank: "Q", suit: "H" },
+  { rank: "2", suit: "C" },
+  { rank: "5", suit: "D" }
+]
+
+storiesOf('Hand', module)
+  .add('with multiple cards', () => (
+    <Hand cards={cards} />
+  ))
+  .add('with no cards', () => (
+    <Hand cards={[]} />
   ))
