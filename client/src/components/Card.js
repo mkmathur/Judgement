@@ -2,7 +2,7 @@ import React from 'react';
 
 const Card = ({rank, suit}) => (
   <div className="card">
-    <p>{rank} of {suit}</p>
+    <img src={require(`../../assets/cards/${rank}${suit}.svg`)} />
   </div>
 );
 

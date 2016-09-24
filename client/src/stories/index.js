@@ -19,8 +19,8 @@ storiesOf('Button', module)
 
 storiesOf('Card', module)
   .add('with number', () => (
-    <Card rank="2" suit="Clubs" />
+    <Card rank="2" suit="C" />
   ))
   .add('face card', () => (
-    <Card rank="Q" suit="Hearts" />
+    <Card rank="Q" suit="H" />
   ))
