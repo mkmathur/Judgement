@@ -2,11 +2,11 @@ import React from 'react';
 import { storiesOf, action, linkTo } from '@kadira/storybook';
 import Button from './Button';
 import Welcome from './Welcome';
-import Card from '../components/Card';
-import Hand from '../components/Hand';
+import Card from '../components/Card.jsx';
+import Hand from '../components/Hand.jsx';
 import Table from '../components/Table.jsx';
-import JudgementPicker from '../components/JudgementPicker';
-import Game from '../components/Game';
+import JudgementPicker from '../components/JudgementPicker.jsx';
+import Game from '../components/Game.jsx';
 
 storiesOf('Welcome', module)
   .add('to Storybook', () => (

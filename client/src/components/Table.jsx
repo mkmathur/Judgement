@@ -1,6 +1,6 @@
 import React from 'react';
-import Card from './Card';
-import Placeholder from './Placeholder';
+import Card from './Card.jsx';
+import Placeholder from './Placeholder.jsx';
 import './Table.css';
 
 const Table = ({cards}) => (

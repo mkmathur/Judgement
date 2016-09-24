@@ -1,6 +1,6 @@
 import React from 'react';
-import JudgementPicker from '../components/JudgementPicker';
-import Hand from '../components/Hand';
+import JudgementPicker from '../components/JudgementPicker.jsx';
+import Hand from '../components/Hand.jsx';
 import Table from '../components/Table.jsx';
 import './Game.css';
 
