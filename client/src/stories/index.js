@@ -4,7 +4,9 @@ import Button from './Button';
 import Welcome from './Welcome';
 import Card from '../components/Card';
 import Hand from '../components/Hand';
+import Table from '../components/Table.jsx';
 import JudgementPicker from '../components/JudgementPicker';
+import Game from '../components/Game';
 
 storiesOf('Welcome', module)
   .add('to Storybook', () => (
@@ -41,6 +43,14 @@ storiesOf('Hand', module)
     <Hand cards={[]} />
   ))
 
+storiesOf('Table', module)
+  .add('with some cards', () => (
+    <Table cards={[...cards, null]}/>
+  ))
+  .add('with no cards', () => (
+    <Table cards={[null, null, null, null]} />
+  ))
+
 storiesOf('JudgementPicker', module)
   .add('for 1-card round', () => (
     <JudgementPicker max={1} />
@@ -50,4 +60,12 @@ storiesOf('JudgementPicker', module)
   ))
   .add('for 13-card round', () => (
     <JudgementPicker max={13} />
+  ))
+
+storiesOf('Game', module)
+  .add('waiting for judgement', () => (
+    <Game state={"WAITING_FOR_JUDGEMENTS"} roundNum={3} hand={cards} />
+  ))
+  .add('waiting for card', () => (
+    <Game state={"WAITING_FOR_CARD"} roundNum={3} hand={cards} table={[...cards, null]}/>
   ))
