@@ -2,11 +2,12 @@ import React from 'react';
 import JudgementPicker from '../components/JudgementPicker.jsx';
 import Hand from '../components/Hand.jsx';
 import Table from '../components/Table.jsx';
+import PlayerList from '../components/PlayerList.jsx';
 import './Game.css';
 
 class Game extends React.Component {
   render() {
-    const {state, roundNum, hand, table} = this.props;
+    const {state, roundNum, hand, table, players} = this.props;
     return (
       <div className="Game--container">
         {
@@ -18,6 +19,7 @@ class Game extends React.Component {
             <Table cards={table} />
         }
         <Hand cards={hand} />
+        <PlayerList players={players} />
       </div>
     );
   }

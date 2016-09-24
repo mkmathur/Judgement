@@ -2,14 +2,10 @@ import React from 'react';
 import {Router, Route, Link, browserHistory} from 'react-router';
 import Firebase from 'firebase';
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
 import './App.css';
-
-injectTapEventPlugin();
 
 Firebase.initializeApp({
   apiKey: "AIzaSyDTdcoqVfNhd8wcEoUPCLPzb7uEu4qx3To",
@@ -187,14 +183,12 @@ const PlayGame = ({params}) => (
 );
 
 const App = () => (
-  <MuiThemeProvider>
-    <Router history={browserHistory}>
-      <Route path="/" component={Home} />
-      <Route path="/new" component={NewGame} />
-      <Route path="/join" component={JoinGame} />
-      <Route path="/play/:id" component={PlayGame} />
-    </Router>
-  </MuiThemeProvider>
+  <Router history={browserHistory}>
+    <Route path="/" component={Home} />
+    <Route path="/new" component={NewGame} />
+    <Route path="/join" component={JoinGame} />
+    <Route path="/play/:id" component={PlayGame} />
+  </Router>
 );
 
 export default App;
