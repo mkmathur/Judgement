@@ -30,11 +30,11 @@ api.post('/players', (req, res) => {
   playersRef
     .transaction(currentData => {
       const playerId = currentData ? Object.keys(currentData).length : 0;
-      const newData = currentData || {};
-      newData[playerId] = {
-        name: playerName
-      };
-      return newData;
+      return Object.assign({}, currentData || {}, {
+        [playerId]: {
+          name: playerName
+        } 
+      });
     })
     .then(({committed, snapshot}) => {
       const players = snapshot.val();
