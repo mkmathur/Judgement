@@ -4,6 +4,7 @@ import Button from './Button';
 import Welcome from './Welcome';
 import Card from '../components/Card';
 import Hand from '../components/Hand';
+import JudgementPicker from '../components/JudgementPicker';
 
 storiesOf('Welcome', module)
   .add('to Storybook', () => (
@@ -38,4 +39,15 @@ storiesOf('Hand', module)
   ))
   .add('with no cards', () => (
     <Hand cards={[]} />
+  ))
+
+storiesOf('JudgementPicker', module)
+  .add('for 1-card round', () => (
+    <JudgementPicker max={1} />
+  ))
+  .add('for 5-card round', () => (
+    <JudgementPicker max={5} />
+  ))
+  .add('for 13-card round', () => (
+    <JudgementPicker max={13} />
   ))

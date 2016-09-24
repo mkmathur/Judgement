@@ -1,0 +1,26 @@
+.JudgementPicker--container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slider {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+h3 {
+  margin-bottom: 0;
+}
+
+.controls {
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+
+.Button--container {
+    margin: 25px;
+    margin-top: 40px;
+}
