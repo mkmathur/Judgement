@@ -24,7 +24,7 @@ class JudgementPicker extends React.Component {
   render() {
     const rootStyle = {
       width: 100 * this.props.max,
-      "max-width": 480
+      maxWidth: 480
     };
 
     return (

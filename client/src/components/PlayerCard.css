@@ -1,0 +1,20 @@
+.PlayerCard--items {
+    display: flex;
+    align-items: baseline;
+    padding-left: 10px;
+    justify-content: space-between;
+}
+
+.PlayerCard--items h3 {
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+.name {
+    display: flex;
+    align-items: baseline;
+}
+
+.data {
+    display: flex;
+}

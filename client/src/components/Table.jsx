@@ -6,8 +6,8 @@ import './Table.css';
 const Table = ({cards}) => (
   <div className="Table--container">
     {
-      cards.map(card => {
-        return (card != null) ? <Card rank={card.rank} suit={card.suit} /> : <Placeholder />
+      cards.map((card, idx) => {
+        return (card != null) ? <Card key={idx} rank={card.rank} suit={card.suit} /> : <Placeholder key={idx} />
       })
     }
   </div>
